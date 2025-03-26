@@ -37,7 +37,7 @@ jobs:
       version: ${{ inputs.version }}
   deploy-main:
     uses: navikt/oh-workflows/.github/workflows/deploy-all-dev.yml@main
-    needs: build-main
+    needs: build-gradle
     secrets: inherit
     with:
       image: ${{ needs.build-main.outputs.image }}
