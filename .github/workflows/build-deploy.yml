@@ -29,10 +29,17 @@ on:
         description: Nais environments to deploy to
         default: 'dev'
 jobs:
-  create-environments-array:
-    name: create-environments array
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - id: create-strategy-matrix
-        run: echo "environments=$(array=$(printf ${{ inputs.environments }} | sed 's/,/ /g');printf '%s\n' ${array}|jq -R . | jq -s -c .)"
+  build-gradle:
+    if: ${{ inputs.build-tool == 'gradle' }}
+    uses: navikt/oh-workflows/.github/workflows/build-gradle.yml@main
+    secrets: inherit
+    with:
+      version: ${{ inputs.version }}
+  deploy-main:
+    uses: navikt/oh-workflows/.github/workflows/deploy-all-dev.yml@main
+    needs: build-gradle
+    secrets: inherit
+    with:
+      image: ${{ needs.build-gradle.outputs.image }}
+      cluster: ${{ inputs.cluster }}
+      environments: ${{ inputs.environments }}
