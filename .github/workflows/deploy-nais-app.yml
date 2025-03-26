@@ -14,7 +14,7 @@ on:
 
 jobs:
   deploy-nais-app:
-    if:  ${{ (inputs.nav-environment != 'dev') || (inputs.nav-environment == 'dev' && github.ref == 'refs/heads/main') }}
+    if:  ${{ (inputs.nav-environment != 'prod') || (inputs.nav-environment == 'prod' && github.ref == 'refs/heads/main') }}
     name: Deploy to ${{ inputs.nav-environment }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.nav-cluster }}:oppgavehandtering
