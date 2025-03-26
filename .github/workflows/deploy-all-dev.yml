@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: create-strategy-matrix
-        run: echo "environments-array= ${{ inputs.environments }} | jq -R . | jq -s -c .)" >> $GITHUB_OUTPUT
+        run: echo "environments-array=$(printf ${{ inputs.environments }} | jq -R . | jq -s -c .)" >> $GITHUB_OUTPUT
       - id: print-environments
         run: echo "List of environments to deploy to is ${{ steps.create-strategy-matrix.outputs.environments-array }}"
   deploy:
