@@ -41,4 +41,5 @@ jobs:
     secrets: inherit
     with:
       image: ${{ needs.build-main.outputs.image }}
-      nav-cluster: ${{ inputs.cluster }}
+      cluster: ${{ inputs.cluster }}
+      environments: ${{ inputs.environments }}
