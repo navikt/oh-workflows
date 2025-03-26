@@ -15,7 +15,7 @@ on:
 
 jobs:
   create-environments-array:
-    name: create-environments array to deploy to
+    name: create-environments array
     runs-on: ubuntu-latest
     outputs:
       environments: ${{ steps.create-strategy-matrix.outputs.environments-array }}
