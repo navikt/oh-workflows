@@ -36,4 +36,4 @@ jobs:
       - uses: actions/checkout@v4
       - id: create-strategy-matrix
         run: echo "environments-array=$(array=(${(s:,:)(${{ inputs.environments }})});printf '%s\n' ${array[@]} | jq -R . | jq -s -c .)" |
-             echo "environments-array=$(environments= ${{ inputs.environments }};array=(${(s:,:)environments});printf '%s\n' ${array[@]} | jq -R . | jq -s -c .)" |
+             echo "environments-array=$(environments= ${{ inputs.environments }};array=(${(s:,:)environments});printf '%s\n' ${array[@]} | jq -R . | jq -s -c .)"
