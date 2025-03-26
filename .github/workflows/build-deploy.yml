@@ -35,4 +35,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: create-strategy-matrix
-        run: environments=${{ inputs.environments }};array=(${(s:,:)"${environments}"});
+        run: echo "environments=$(array=$(printf ${{ inputs.environments }} | sed 's/,/ /g');printf '%s\n' ${array}|jq -R . | jq -s -c .)"
