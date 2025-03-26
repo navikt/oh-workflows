@@ -16,6 +16,7 @@ jobs:
   deploy-nais-app:
     name: Deploy to ${{ inputs.nav-environment }}
     runs-on: ubuntu-latest
+    environment: ${{ inputs.nav-cluster }}:oppgavehandtering
     steps:
       - uses: actions/checkout@v4
       - name: Check if nais/app-${{ inputs.nav-environment }}.yaml exists
