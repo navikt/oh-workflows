@@ -1,0 +1,37 @@
+name: Deploy to environments
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      cluster:
+        required: true
+        type: string
+      environments:
+        required: true
+
+jobs:
+  create-environments-array:
+    name: create-environments array to deploy to
+    runs-on: ubuntu-latest
+    outputs:
+      environments: ${{ steps.create-strategy-matrix.outputs.environments-array }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: create-strategy-matrix
+        run: echo "environments-array= ${{ inputs.environments }} | jq -R . | jq -s -c .)" >> $GITHUB_OUTPUT
+      - id: print-environments
+        run: echo "List of environments to deploy to is ${{ steps.create-strategy-matrix.outputs.environments-array }}"
+  deploy:
+    uses: navikt/dok-workflows/.github/workflows/deploy-nais-app.yml@main
+    needs: create-environments-array
+    strategy:
+      matrix:
+        environment: ${{ fromJson(needs.create-environments-array.outputs.environments) }}
+    with:
+      image: ${{ inputs.image }}
+      nav-cluster: ${{ inputs.cluster }}
+      nav-environment: ${{ matrix.environment }}
+    secrets: inherit

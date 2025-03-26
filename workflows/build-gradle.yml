@@ -1,0 +1,46 @@
+name: Build app
+
+on:
+  workflow_call:
+    outputs:
+      tag:
+        description: "Build tag"
+        value: ${{ jobs.build-app.outputs.tag }}
+      image:
+        description: "Image"
+        value: ${{ jobs.build-app.outputs.image }}
+    inputs:
+      version:
+        required: true
+        type: string
+jobs:
+  build-app:
+    name: Build app
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      tag: ${{ inputs.should-byosbom && steps.docker-build-push-with-custom-sbom.outputs.tag || steps.docker-build-push.outputs.tag }}
+      image: ${{ inputs.should-byosbom && steps.docker-build-push-with-custom-sbom.outputs.image || steps.docker-build-push.outputs.image }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up JDK${{ inputs.version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.version }}
+          distribution: 'temurin'
+      - uses: gradle/actions/setup-gradle@v3
+      - name: Gradle build
+        run: ./gradlew build
+      - name: Build and push to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: oppgavehandtering
+          dockerfile: Dockerfile
+        #env:
+          #ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
