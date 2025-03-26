@@ -25,7 +25,7 @@ jobs:
       - id: print-environments
         run: echo "List of environments to deploy to is ${{ steps.create-strategy-matrix.outputs.environments-array }}"
   deploy:
-    uses: navikt/dok-workflows/.github/workflows/deploy-nais-app.yml@main
+    uses: navikt/oh-workflows/.github/workflows/deploy-nais-app.yml@main
     needs: create-environments-array
     strategy:
       matrix:

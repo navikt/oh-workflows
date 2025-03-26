@@ -36,7 +36,7 @@ jobs:
     with:
       version: ${{ inputs.version }}
   deploy-main:
-    uses: navikt/dok-workflows/.github/workflows/deploy-all-dev.yml@main
+    uses: navikt/oh-workflows/.github/workflows/deploy-all-dev.yml@main
     needs: build-main
     secrets: inherit
     with:
