@@ -11,6 +11,7 @@ on:
         type: string
       environments:
         required: true
+        type: string
 
 jobs:
   create-environments-array:
