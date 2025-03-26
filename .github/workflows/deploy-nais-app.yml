@@ -23,7 +23,7 @@ jobs:
         id: check-yaml
         run: echo "file-exists=$(test -f nais/app-${{ inputs.nav-environment }}.yaml && echo 'config_exists' || echo 'config_not_exists')" >> $GITHUB_OUTPUT
       - uses: nais/deploy/actions/deploy@v2
-        if: ${{ steps.check-json.outputs.file-exists == 'config_exists_temp' }}
+        if: ${{ steps.check-json.outputs.file-exists == 'config_exists' }}
         env:
           CLUSTER: ${{ inputs.nav-cluster }}
           RESOURCE: nais/app-${{ inputs.nav-environment }}.yaml

@@ -40,6 +40,6 @@ jobs:
     needs: build-gradle
     secrets: inherit
     with:
-      image: ${{ needs.build-main.outputs.image }}
+      image: ${{ needs.build-gradle.outputs.image }}
       cluster: ${{ inputs.cluster }}
       environments: ${{ inputs.environments }}
