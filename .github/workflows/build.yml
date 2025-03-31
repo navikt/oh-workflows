@@ -27,8 +27,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - if: ${{ inputs.build-tool == 'Gradle' }}
-        uses: ./.github/actions/build-gradle
+      - name: Build with Gradle
+        if: ${{ inputs.build-tool == 'Gradle' }}
+        uses: navikt/oh-workflows/.github/actions/build-gradle
         with:
           language: ${{ inputs.language }}
           language-version: ${{ inputs.language-version }}
