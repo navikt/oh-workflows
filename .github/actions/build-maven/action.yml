@@ -12,3 +12,4 @@ runs:
         TEAM: oppgavehandtering
         REPO: ${{ github.repository }}
       run: mvn -B package --file pom.xml
+      shell: bash
