@@ -8,7 +8,7 @@ runs:
   steps:
     - name: Maven build
       env:
-        SNYK_TOKEN: ${{ snyk-token }}
+        SNYK_TOKEN: ${{ inputs.snyk-token }}
         TEAM: oppgavehandtering
         REPO: ${{ github.repository }}
       run: mvn -B package --file pom.xml
