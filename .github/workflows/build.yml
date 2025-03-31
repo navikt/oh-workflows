@@ -20,6 +20,9 @@ on:
         default: 'Gradle'
 jobs:
   build:
+    permissions:
+      contents: read
+      id-token: write
     name: ${{ inputs.build-tool }}
     runs-on: ubuntu-latest
     steps:
