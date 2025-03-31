@@ -37,3 +37,15 @@ jobs:
           CLUSTER: ${{ inputs.cluster }}
           RESOURCE: .nais/app-q1.yaml
           VAR: image=${{ inputs.image }}
+  deploy-prod:
+    if: ${{ inputs.environments == 'prod' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') }}
+    name: Prod
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.cluster }}:oppgavehandtering
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ inputs.cluster }}
+          RESOURCE: .nais/app-prod.yaml
+          VAR: image=${{ inputs.image }}
