@@ -25,7 +25,7 @@ jobs:
     steps:
       - id: gradle
         if: ${{ inputs.build-tool == 'Gradle' }}
-        uses: ./.github/actions/build-gradle.yml
+        uses: ./.github/actions/build-gradle
         with:
           language: ${{ inputs.language }}
           language-version: ${{ inputs.language-version }}
