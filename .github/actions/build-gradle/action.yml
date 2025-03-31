@@ -1,28 +1,9 @@
 name: Build gradle
 description: Steps for building a gradle project
-inputs:
-  java-version:
-    required: false
-    type: string
-    default: '21'
-outputs:
-  image:
-    value: ${{ steps.docker-build-push.outputs.image }}
 runs:
   using: "composite"
   steps:
-    - name: Set up JDK${{ inputs.java-version }}
-      uses: actions/setup-java@v4
-      with:
-        java-version: ${{ inputs.java-version }}
-        distribution: 'temurin'
     - uses: gradle/actions/setup-gradle@v3
     - name: Gradle build
       run: ./gradlew build
       shell: bash
-    - name: Build and push to GAR
-      uses: nais/docker-build-push@v0
-      id: docker-build-push
-      with:
-        team: oppgavehandtering
-        dockerfile: Dockerfile

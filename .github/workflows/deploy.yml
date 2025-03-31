@@ -1,0 +1,37 @@
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      cluster:
+        required: true
+        type: string
+      environments:
+        required: true
+        type: string
+
+jobs:
+  deploy-dev:
+    if:  ${{ contains(inputs.environments, 'dev') }}
+    name: Dev
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.cluster }}:oppgavehandtering
+    steps:
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ inputs.cluster }}
+          RESOURCE: .nais/app-dev.yaml
+          VAR: image=${{ inputs.image }}
+  deploy-q1:
+    if: ${{ contains(inputs.environments, 'q1') }}
+    name: Q1
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.cluster }}:oppgavehandtering
+    steps:
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ inputs.cluster }}
+          RESOURCE: .nais/app-q1.yaml
+          VAR: image=${{ inputs.image }}

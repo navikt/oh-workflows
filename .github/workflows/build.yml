@@ -13,17 +13,34 @@ on:
         type: string
         description: Build tool to use
         default: 'Gradle'
+    outputs:
+      image:
+        description: "Image"
+        value: ${{ jobs.build.outputs.image }}
 jobs:
   build:
     name: ${{ inputs.build-tool }}
     runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
+      - name: Set up JDK${{ inputs.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: 'temurin'
       - name: Build with Gradle
-        if: ${{ inputs.build-tool == 'Gradle' }}
+        if: ${{ (inputs.build-tool) == 'Gradle' }}
         uses: navikt/oh-workflows/.github/actions/build-gradle@main
         with:
           java-version: ${{ inputs.java-version }}
+      - name: Build and push to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: oppgavehandtering
+          dockerfile: Dockerfile
