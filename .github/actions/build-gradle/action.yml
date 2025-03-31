@@ -23,6 +23,7 @@ runs:
     - uses: gradle/actions/setup-gradle@v3
     - name: Gradle build
       run: ./gradlew build
+      shell: bash
     - name: Build and push to GAR
       uses: nais/docker-build-push@v0
       id: docker-build-push
