@@ -3,12 +3,7 @@ name: Build
 on:
   workflow_call:
     inputs:
-      language:
-        required: false
-        type: string
-        description: Language to build with
-        default: 'java'
-      language-version:
+      java-version:
         required: false
         type: string
         description: Version to build with
@@ -31,4 +26,4 @@ jobs:
         if: ${{ inputs.build-tool == 'Gradle' }}
         uses: navikt/oh-workflows/.github/actions/build-gradle@main
         with:
-          java-version: ${{ inputs.language-version }}
+          java-version: ${{ inputs.java-version }}

@@ -26,5 +26,3 @@ runs:
       with:
         team: oppgavehandtering
         dockerfile: Dockerfile
-        #env:
-        #ACTIONS_RUNTIME_TOKEN: ${{ secrets.GITHUB_TOKEN }}
