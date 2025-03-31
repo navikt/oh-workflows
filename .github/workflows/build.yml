@@ -21,6 +21,7 @@ jobs:
   build:
     name: ${{ inputs.build-tool }}
     runs-on: ubuntu-latest
+    secrets: inherit
     outputs:
       image: ${{ steps.docker-build-push.outputs.image }}
     steps:
