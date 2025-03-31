@@ -23,7 +23,11 @@ jobs:
     name: ${{ inputs.build-tool }}
     runs-on: ubuntu-latest
     steps:
-      - id: gradle
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: Gradle build
         if: ${{ inputs.build-tool == 'Gradle' }}
         uses: ./.github/actions/build-gradle
         with:
