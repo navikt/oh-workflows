@@ -10,8 +10,8 @@ inputs:
     type: string
     default: '21'
 outputs:
-  image: ${{ steps.docker-build-push.outputs.image }}
-
+  image:
+    value: ${{ steps.docker-build-push.outputs.image }}
 runs:
   using: "composite"
   steps:
