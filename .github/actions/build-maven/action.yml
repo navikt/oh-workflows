@@ -1,11 +1,14 @@
 name: Build maven
 description: Steps for building a maven project
+inputs:
+  snyk-token:
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Maven build
       env:
-        SNYK_TOKEN: ${{secrets.SNYK_TOKEN}}
+        SNYK_TOKEN: ${{ snyk-token }}
         TEAM: oppgavehandtering
         REPO: ${{ github.repository }}
       run: mvn -B package --file pom.xml

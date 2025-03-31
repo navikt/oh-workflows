@@ -21,7 +21,6 @@ jobs:
   build:
     name: ${{ inputs.build-tool }}
     runs-on: ubuntu-latest
-    secrets: inherit
     outputs:
       image: ${{ steps.docker-build-push.outputs.image }}
     steps:
@@ -40,6 +39,8 @@ jobs:
       - name: Build with Maven
         if: ${{ (inputs.build-tool) == 'Maven' }}
         uses: navikt/oh-workflows/.github/actions/build-maven@main
+        with:
+          snyk-token: ${{ secrets.SNYK_TOKEN }}
       - name: Build and push to GAR
         uses: nais/docker-build-push@v0
         id: docker-build-push
