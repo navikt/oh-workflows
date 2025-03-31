@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
     steps:
+      - uses: actions/checkout@v4
       - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ inputs.cluster }}
@@ -30,6 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
     steps:
+      - uses: actions/checkout@v4
       - uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: ${{ inputs.cluster }}

@@ -36,8 +36,6 @@ jobs:
       - name: Build with Gradle
         if: ${{ (inputs.build-tool) == 'Gradle' }}
         uses: navikt/oh-workflows/.github/actions/build-gradle@main
-        with:
-          java-version: ${{ inputs.java-version }}
       - name: Build and push to GAR
         uses: nais/docker-build-push@v0
         id: docker-build-push
