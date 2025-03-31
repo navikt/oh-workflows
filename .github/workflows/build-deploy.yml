@@ -8,7 +8,7 @@ on:
         type: string
         description: Language to build with
         default: 'java'
-      version:
+      language-version:
         required: false
         type: string
         description: Version to build with
