@@ -31,5 +31,4 @@ jobs:
         if: ${{ inputs.build-tool == 'Gradle' }}
         uses: navikt/oh-workflows/.github/actions/build-gradle@main
         with:
-          language: ${{ inputs.language }}
-          language-version: ${{ inputs.language-version }}
+          java-version: ${{ inputs.language-version }}

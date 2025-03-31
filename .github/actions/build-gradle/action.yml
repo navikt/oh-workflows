@@ -1,11 +1,7 @@
 name: Build gradle
 description: Steps for building a gradle project
 inputs:
-  language:
-    required: false
-    type: string
-    default: 'java'
-  language-version:
+  java-version:
     required: false
     type: string
     default: '21'
@@ -15,10 +11,10 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Set up JDK${{ inputs.version }}
+    - name: Set up JDK${{ inputs.java-version }}
       uses: actions/setup-java@v4
       with:
-        java-version: ${{ inputs.version }}
+        java-version: ${{ inputs.java-version }}
         distribution: 'temurin'
     - uses: gradle/actions/setup-gradle@v3
     - name: Gradle build
