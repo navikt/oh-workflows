@@ -5,20 +5,16 @@ on:
       image:
         required: true
         type: string
-      cluster:
-        required: true
-        type: string
-      environments:
-        required: true
-        type: string
-
+    cluster:
+      required: true
+      type: string
 jobs:
   deploy-prod:
-    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') && contains(inputs.environments, 'prod') }}
-    name: ""
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows' }}
+    name: Prod
     runs-on: ubuntu-latest
-    environment: prod-${{ inputs.cluster }}:oppgavehandtering
+    environment: ${{ inputs.cluster }}:oppgavehandtering
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Cluster prod-${{ inputs.cluster }}:oppgavehandtering" |
+      - run: echo "Cluster ${{ inputs.cluster }}:oppgavehandtering" |
           echo "Nais .nais/app-prod.yaml"
