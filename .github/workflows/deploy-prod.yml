@@ -11,7 +11,7 @@ on:
         type: string
 jobs:
   deploy-prod:
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows' }}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
     name: Prod
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering

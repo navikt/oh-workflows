@@ -3,7 +3,7 @@ name: Build
 on:
   workflow_call:
     inputs:
-      java-version:
+      node-version:
         required: false
         type: string
         description: Version to build with
