@@ -24,10 +24,8 @@ jobs:
           - environment: prod
     steps:
       - uses: actions/checkout@v4
-      - id: ech
-        run: echo "Environment ${{ matrix.environment }}" |
-          echo "Cluster ${{ inputs.cluster }}:oppgavehandtering" |
-          echo "Nais .nais/app-${{ matrix.environment }}.yaml"
-      - id: ech2
-        if: ${{ matrix.environment == 'q1' }}
-        run: echo "hit" && exit 1
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ inputs.cluster }}
+          RESOURCE: .nais/app-${{ matrix.environment }}.yaml
+          VAR: image=${{ inputs.image }}

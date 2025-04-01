@@ -16,14 +16,37 @@ on:
     outputs:
       image:
         description: "Image"
-        value: sdfsdf
+        value: ${{ jobs.build.outputs.image }}
 jobs:
   build:
     name: ${{ inputs.build-tool }}
     runs-on: ubuntu-latest
     outputs:
-      image: fsdfds
+      image: ${{ steps.docker-build-push.outputs.image }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Set up JDK${{ inputs.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: 'temurin'
+      - name: Build with Gradle
+        if: ${{ (inputs.build-tool) == 'Gradle' }}
+        uses: navikt/oh-workflows/.github/actions/build-gradle@main
+      - name: Build with Maven
+        if: ${{ (inputs.build-tool) == 'Maven' }}
+        uses: navikt/oh-workflows/.github/actions/build-maven@main
+        with:
+          snyk-token: ${{ secrets.SNYK_TOKEN }}
+      - name: Build and push to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: oppgavehandtering
+          dockerfile: Dockerfile
       - name: Echo image to deploy
         run: |
-          echo Deployer
+          echo Deployer ${{ steps.docker-build-push.outputs.image }}
