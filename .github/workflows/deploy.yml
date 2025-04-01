@@ -28,7 +28,10 @@ jobs:
         run: echo "Environment ${{ matrix.environment }}" |
           echo "Cluster dev-${{ inputs.cluster }}:oppgavehandtering" |
           echo "Nais .nais/app-${{ matrix.environment }}.yaml"
-          echo "envi=${{ matrix.environment }}"
+          echo "${{ matrix.environment == 'q1' &&  }}"
+      - id: ech2
+        if: ${{ matrix.environment == 'q1' }}
+        run: echo "hit" && exit 1
   deploy-prod:
     if: ${{ contains(inputs.environments, 'prod') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') }}
     name: Prod
