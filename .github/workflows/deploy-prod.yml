@@ -1,3 +1,4 @@
+name: Deploy prod
 
 on:
   workflow_call:

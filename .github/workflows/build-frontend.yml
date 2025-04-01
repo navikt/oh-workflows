@@ -1,0 +1,55 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        required: false
+        type: string
+        description: Version to build with
+        default: '21'
+      build-tool:
+        required: false
+        type: string
+        description: Build tool to use
+        default: 'Gradle'
+    outputs:
+      image:
+        description: "Image"
+        value: ${{ jobs.build.outputs.image }}
+jobs:
+  build:
+    name: ${{ inputs.build-tool }}
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Set up JDK${{ inputs.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: 'temurin'
+      - name: Build with Gradle
+        if: ${{ (inputs.build-tool) == 'Gradle' }}
+        uses: navikt/oh-workflows/.github/actions/build-gradle@main
+      - name: Build with Maven
+        if: ${{ (inputs.build-tool) == 'Maven' }}
+        uses: navikt/oh-workflows/.github/actions/build-maven@main
+        with:
+          snyk-token: ${{ secrets.SNYK_TOKEN }}
+      - name: Build with Node
+        if: ${{ (inputs.build-tool) == 'Node' }}
+        uses: navikt/oh-workflows/.github/actions/build-node@main
+      - name: Build and push to GAR
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: oppgavehandtering
+          dockerfile: Dockerfile
+      - name: Echo image to deploy
+        run: |
+          echo Deployer ${{ steps.docker-build-push.outputs.image }}
