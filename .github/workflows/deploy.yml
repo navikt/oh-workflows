@@ -14,7 +14,7 @@ on:
 
 jobs:
   deploy-dev:
-    name: TT ${{ strategy.matrix.environment }}
+    name: TT ${{ steps.ech.outputs.envi }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
     strategy:
@@ -24,9 +24,11 @@ jobs:
           - environment: prod
     steps:
       - uses: actions/checkout@v4
-      - run: echo "Environment ${{ matrix.environment }}" |
+      - id: ech
+        run: echo "Environment ${{ matrix.environment }}" |
           echo "Cluster dev-${{ inputs.cluster }}:oppgavehandtering" |
           echo "Nais .nais/app-${{ matrix.environment }}.yaml"
+          echo "envi=${{ matrix.environment }}"
   deploy-prod:
     if: ${{ contains(inputs.environments, 'prod') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') }}
     name: Prod
