@@ -14,7 +14,7 @@ on:
 
 jobs:
   Dev:
-    name: ${{ matrix.environment2 }}
+    name: ${{ matrix.environment }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
     strategy:
