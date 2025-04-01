@@ -14,9 +14,9 @@ on:
 
 jobs:
   deploy-dev:
-    name: ${{ matrix.environment }}.firstUppercase()
+    name: Dev ${{ matrix.environment }}
     runs-on: ubuntu-latest
-    environment: ${{ inputs.cluster }}:oppgavehandtering
+    environment: dev-${{ inputs.cluster }}:oppgavehandtering
     strategy:
       matrix:
         environment: ${{ fromJson(inputs.environments) }}
@@ -35,7 +35,7 @@ jobs:
     if: ${{ contains(inputs.environments, 'prod') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') }}
     name: Prod
     runs-on: ubuntu-latest
-    environment: ${{ inputs.cluster }}:oppgavehandtering
+    environment: prod-${{ inputs.cluster }}:oppgavehandtering
     steps:
       - uses: actions/checkout@v4
       - run: echo "Cluster prod-${{ inputs.cluster }}:oppgavehandtering" |
