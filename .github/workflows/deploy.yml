@@ -14,21 +14,21 @@ on:
 
 jobs:
   deploy-dev:
-    name: TT ${{ steps.ech.outputs.envi }}
+    name: TT ${{ matrix.environment2 }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
     strategy:
       matrix:
-        environment: ${{ fromJson(inputs.environments) }}
+        environment2: ${{ fromJson(inputs.environments) }}
         exclude:
-          - environment: prod
+          - environment2: prod
     steps:
       - uses: actions/checkout@v4
       - id: ech
-        run: echo "Environment ${{ matrix.environment }}" |
+        run: echo "Environment ${{ matrix.environment2 }}" |
           echo "Cluster dev-${{ inputs.cluster }}:oppgavehandtering" |
-          echo "Nais .nais/app-${{ matrix.environment }}.yaml"
-          echo "envi=${{ matrix.environment }}"
+          echo "Nais .nais/app-${{ matrix.environment2 }}.yaml"
+          echo "envi=${{ matrix.environment2 }}"
   deploy-prod:
     if: ${{ contains(inputs.environments, 'prod') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') }}
     name: Prod
