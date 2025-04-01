@@ -13,8 +13,8 @@ on:
         type: string
 
 jobs:
-  deploy-dev:
-    name: Dev
+  dev:
+    name: ${{ matrix.environment }}
     runs-on: ubuntu-latest
     environment: dev-${{ inputs.cluster }}:oppgavehandtering
     strategy:
@@ -28,9 +28,6 @@ jobs:
         run: echo "Environment ${{ matrix.environment }}" |
           echo "Cluster dev-${{ inputs.cluster }}:oppgavehandtering" |
           echo "Nais .nais/app-${{ matrix.environment }}.yaml"
-      - id: ech2
-        if: ${{ matrix.environment == 'q1' }}
-        run: echo "hit" && exit 1
   deploy-prod:
     if: ${{ contains(inputs.environments, 'prod') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') }}
     name: Prod
