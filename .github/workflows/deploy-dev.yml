@@ -24,8 +24,4 @@ jobs:
           - environment: prod
     steps:
       - uses: actions/checkout@v4
-      - uses: nais/deploy/actions/deploy@v2
-        env:
-          CLUSTER: ${{ inputs.cluster }}
-          RESOURCE: .nais/app-${{ matrix.environment }}.yaml
-          VAR: image=${{ inputs.image }}
+      - run: echo env ${{ matrix.environment }}
