@@ -1,4 +1,3 @@
-
 on:
   workflow_call:
     inputs:
@@ -14,38 +13,25 @@ on:
 
 jobs:
   deploy-dev:
-    if:  ${{ contains(inputs.environments, 'dev') }}
-    name: Dev
+    name: {{ matrix.environment }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
+    strategy:
+      matrix:
+        environment: ${{ fromJson(inputs.environments) }}
+        exclude:
+          - environment: prod
     steps:
       - uses: actions/checkout@v4
-      - uses: nais/deploy/actions/deploy@v2
-        env:
-          CLUSTER: ${{ inputs.cluster }}
-          RESOURCE: .nais/app-dev.yaml
-          VAR: image=${{ inputs.image }}
-  deploy-q1:
-    if: ${{ contains(inputs.environments, 'q1') }}
-    name: Q1
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.cluster }}:oppgavehandtering
-    steps:
-      - uses: actions/checkout@v4
-      - uses: nais/deploy/actions/deploy@v2
-        env:
-          CLUSTER: ${{ inputs.cluster }}
-          RESOURCE: .nais/app-q1.yaml
-          VAR: image=${{ inputs.image }}
+      - run: echo "Environment ${{ environment }}" |
+          echo "Cluster dev-${{ inputs.cluster }}:oppgavehandtering" |
+          echo "Nais .nais/app-${{ environment }}.yaml"
   deploy-prod:
-    if: ${{ inputs.environments == 'prod' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') }}
+    if: ${{ contains(inputs.environments, 'prod') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') }}
     name: Prod
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
     steps:
       - uses: actions/checkout@v4
-      - uses: nais/deploy/actions/deploy@v2
-        env:
-          CLUSTER: ${{ inputs.cluster }}
-          RESOURCE: .nais/app-prod.yaml
-          VAR: image=${{ inputs.image }}
+      - run: echo "Cluster prod-${{ inputs.cluster }}:oppgavehandtering" |
+          echo "Nais .nais/app-prod.yaml"
