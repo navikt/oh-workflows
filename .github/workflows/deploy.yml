@@ -14,7 +14,7 @@ on:
 
 jobs:
   deploy-dev:
-    name: ${{ matrix.environment }}
+    name: ${{ matrix.environment }}.firstUppercase()
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
     strategy:
