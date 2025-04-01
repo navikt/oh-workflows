@@ -19,9 +19,13 @@ jobs:
     environment: ${{ inputs.cluster }}:oppgavehandtering
     strategy:
       matrix:
-        environment: ${{ inputs.environments }}
+        environment: ${{ fromJson(inputs.environments) }}
         exclude:
           - environment: prod
     steps:
       - uses: actions/checkout@v4
-      - run: echo env ${{ matrix.environment }}
+      - uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: ${{ inputs.cluster }}
+          RESOURCE: .nais/app-${{ matrix.environment }}.yaml
+          VAR: image=${{ inputs.image }}
