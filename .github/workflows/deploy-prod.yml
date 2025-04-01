@@ -13,24 +13,6 @@ on:
         type: string
 
 jobs:
-  Dev:
-    name: ${{ matrix.environment }}
-    runs-on: ubuntu-latest
-    environment: dev-${{ inputs.cluster }}:oppgavehandtering
-    strategy:
-      matrix:
-        environment: ${{ fromJson(inputs.environments) }}
-        exclude:
-          - environment: prod
-    steps:
-      - uses: actions/checkout@v4
-      - id: ech
-        run: echo "Environment ${{ matrix.environment }}" |
-          echo "Cluster dev-${{ inputs.cluster }}:oppgavehandtering" |
-          echo "Nais .nais/app-${{ matrix.environment }}.yaml"
-      - id: ech2
-        if: ${{ matrix.environment == 'q1' }}
-        run: echo "hit" && exit 1
   deploy-prod:
     if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') && contains(inputs.environments, 'prod') }}
     name: Prod

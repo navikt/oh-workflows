@@ -1,0 +1,33 @@
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      cluster:
+        required: true
+        type: string
+      environments:
+        required: true
+        type: string
+
+jobs:
+  Dev:
+    name: ${{ matrix.environment }}
+    runs-on: ubuntu-latest
+    environment: dev-${{ inputs.cluster }}:oppgavehandtering
+    strategy:
+      matrix:
+        environment: ${{ fromJson(inputs.environments) }}
+        exclude:
+          - environment: prod
+    steps:
+      - uses: actions/checkout@v4
+      - id: ech
+        run: echo "Environment ${{ matrix.environment }}" |
+          echo "Cluster dev-${{ inputs.cluster }}:oppgavehandtering" |
+          echo "Nais .nais/app-${{ matrix.environment }}.yaml"
+      - id: ech2
+        if: ${{ matrix.environment == 'q1' }}
+        run: echo "hit" && exit 1
