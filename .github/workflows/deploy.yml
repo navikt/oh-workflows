@@ -28,7 +28,7 @@ jobs:
           echo "Cluster dev-${{ inputs.cluster }}:oppgavehandtering" |
           echo "Nais .nais/app-${{ matrix.environment }}.yaml"
   deploy-prod:
-    if: ${{ contains(inputs.environments, 'prod') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') }}
+    if: ${{ contains(inputs.environments, 'prod') && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') }}
     name: Prod
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
