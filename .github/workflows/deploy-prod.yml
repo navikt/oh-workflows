@@ -5,9 +5,9 @@ on:
       image:
         required: true
         type: string
-    cluster:
-      required: true
-      type: string
+      cluster:
+        required: true
+        type: string
 jobs:
   deploy-prod:
     if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows' }}
