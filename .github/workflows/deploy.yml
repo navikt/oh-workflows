@@ -14,7 +14,7 @@ on:
 
 jobs:
   deploy-dev:
-    name: Test
+    name: TT ${{ strategy.matrix.environment }}
     runs-on: ubuntu-latest
     environment: ${{ inputs.cluster }}:oppgavehandtering
     strategy:
