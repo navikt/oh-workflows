@@ -15,7 +15,6 @@ on:
 jobs:
   deploy-prod:
     if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/oh-workflows') && contains(inputs.environments, 'prod') }}
-    name: Prod
     runs-on: ubuntu-latest
     environment: prod-${{ inputs.cluster }}:oppgavehandtering
     steps:
