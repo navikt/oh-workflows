@@ -14,6 +14,7 @@ on:
 
 jobs:
   Dev:
+    name:
     runs-on: ubuntu-latest
     environment: dev-${{ inputs.cluster }}:oppgavehandtering
     strategy:
