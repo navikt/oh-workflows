@@ -19,7 +19,7 @@ jobs:
     environment: ${{ inputs.cluster }}:oppgavehandtering
     strategy:
       matrix:
-        environment: ${{ fromJson(inputs.environments) }}
+        environment: ${{ inputs.environments }}
         exclude:
           - environment: prod
     steps:
