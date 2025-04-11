@@ -35,10 +35,10 @@ jobs:
           distribution: 'temurin'
           cache: ${{ inputs.build-tool }}
       - name: Build with Gradle
-        if: ${{ (inputs.build-tool) == 'Gradle' }}
+        if: ${{ (inputs.build-tool) == 'gradle' }}
         uses: navikt/oh-workflows/.github/actions/build-gradle@main
       - name: Build with Maven
-        if: ${{ (inputs.build-tool) == 'Maven' }}
+        if: ${{ (inputs.build-tool) == 'maven' }}
         uses: navikt/oh-workflows/.github/actions/build-maven@main
         with:
           snyk-token: ${{ secrets.SNYK_TOKEN }}
