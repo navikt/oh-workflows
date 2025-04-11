@@ -33,7 +33,7 @@ jobs:
         with:
           java-version: ${{ inputs.java-version }}
           distribution: 'temurin'
-          cache: maven
+          cache: ${{ inputs.build-tool }}
       - name: Build with Gradle
         if: ${{ (inputs.build-tool) == 'Gradle' }}
         uses: navikt/oh-workflows/.github/actions/build-gradle@main
