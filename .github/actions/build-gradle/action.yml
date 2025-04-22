@@ -3,7 +3,7 @@ description: Steps for building a gradle project
 runs:
   using: "composite"
   steps:
-    - uses: gradle/actions/setup-gradle@v3
+#    - uses: gradle/actions/setup-gradle@v3
     - name: Gradle build
       run: ./gradlew build
       shell: bash
