@@ -1,11 +1,14 @@
 name: Build npm
 description: Steps for building a npm project
+inputs:
+  github-token:
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Npm build
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.github-token }}
       run: |
         npm ci
         npm run build

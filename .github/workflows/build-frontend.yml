@@ -35,6 +35,8 @@ jobs:
       - name: Build with npm
         if: ${{ (inputs.build-tool) == 'npm' }}
         uses: navikt/oh-workflows/.github/actions/build-npm@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push to GAR
         uses: nais/docker-build-push@v0
         id: docker-build-push
