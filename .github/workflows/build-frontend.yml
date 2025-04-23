@@ -7,12 +7,12 @@ on:
         required: false
         type: string
         description: Version to build with
-        default: '21'
+        default: '22'
       build-tool:
         required: false
         type: string
         description: Build tool to use
-        default: 'Gradle'
+        default: 'npm'
     outputs:
       image:
         description: "Image"
@@ -28,22 +28,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - name: Set up JDK${{ inputs.java-version }}
-        uses: actions/setup-java@v4
+      - uses: actions/setup-node@v4
         with:
-          java-version: ${{ inputs.java-version }}
-          distribution: 'temurin'
-      - name: Build with Gradle
-        if: ${{ (inputs.build-tool) == 'Gradle' }}
-        uses: navikt/oh-workflows/.github/actions/build-gradle@main
-      - name: Build with Maven
-        if: ${{ (inputs.build-tool) == 'Maven' }}
-        uses: navikt/oh-workflows/.github/actions/build-maven@main
-        with:
-          snyk-token: ${{ secrets.SNYK_TOKEN }}
-      - name: Build with Node
-        if: ${{ (inputs.build-tool) == 'Node' }}
-        uses: navikt/oh-workflows/.github/actions/build-node@main
+          node-version: ${{ inputs.node-version }}
+          cache: {{ inputs.build-tool }}
+      - name: Build with npm
+        if: ${{ (inputs.build-tool) == 'npm' }}
+        uses: navikt/oh-workflows/.github/actions/build-npm@main
       - name: Build and push to GAR
         uses: nais/docker-build-push@v0
         id: docker-build-push
