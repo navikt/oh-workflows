@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
-          cache: {{ inputs.build-tool }}
+          cache: ${{ inputs.build-tool }}
       - name: Build with npm
         if: ${{ (inputs.build-tool) == 'npm' }}
         uses: navikt/oh-workflows/.github/actions/build-npm@main
