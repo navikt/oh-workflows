@@ -9,7 +9,6 @@ runs:
     - name: Npm build
       env:
         NODE_AUTH_TOKEN: ${{ inputs.github-token }}
-      run: |
-        npm ci
+      run: npm ci
         npm run build
       shell: bash
