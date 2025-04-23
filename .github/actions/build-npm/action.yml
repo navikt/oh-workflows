@@ -11,5 +11,6 @@ runs:
         NODE_AUTH_TOKEN: ${{ inputs.github-token }}
       run: |
         npm ci
+        npm run test
         npm run build
       shell: bash
