@@ -3,6 +3,8 @@ description: Steps for building a maven project
 inputs:
   snyk-token:
     required: true
+outputs:
+  sbom: target/bom.json
 runs:
   using: "composite"
   steps:

@@ -40,6 +40,7 @@ jobs:
       - name: Build with Maven
         if: ${{ (inputs.build-tool) == 'maven' }}
         uses: navikt/oh-workflows/.github/actions/build-maven@main
+        id: build-maven
         with:
           snyk-token: ${{ secrets.SNYK_TOKEN }}
       - name: Build and push to GAR
@@ -48,6 +49,7 @@ jobs:
         with:
           team: oppgavehandtering
           dockerfile: Dockerfile
+          byosbom: ${{ steps.build-maven.outputs.sbom }}
       - name: Echo image to deploy
         run: |
           echo Deployer ${{ steps.docker-build-push.outputs.image }}
