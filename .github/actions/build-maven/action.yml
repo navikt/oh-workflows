@@ -4,7 +4,9 @@ inputs:
   snyk-token:
     required: true
 outputs:
-  sbom: "target/bom.json"
+  sbom:
+    description: "SBOM file"
+    value: target/bom.json
 runs:
   using: "composite"
   steps:
