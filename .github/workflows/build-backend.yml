@@ -49,7 +49,6 @@ jobs:
         with:
           team: oppgavehandtering
           dockerfile: Dockerfile
-          byosbom: ${{ steps.build-maven.outputs.sbom }}
       - name: Echo image to deploy
         run: |
           echo Deployer ${{ steps.docker-build-push.outputs.image }}
