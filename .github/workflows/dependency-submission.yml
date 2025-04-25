@@ -1,0 +1,23 @@
+name: Submit  dependency graph
+on:
+  workflow_call:
+    inputs:
+      build-tool:
+        required: false
+        type: string
+        description: Build tool to use
+        default: 'gradle'
+jobs:
+  dependencies:
+    name: ${{ inputs.build-tool }}
+    runs-on: ubuntu-latest
+    permissions: # The Dependency Submission API requires write permission
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Maven - Submit Dependency Snapshot
+        if: ${{ (inputs.build-tool) == 'maven' }}
+        uses: advanced-security/maven-dependency-submission-action@v4
+      - name: Gradle - Generate and submit dependency graph
+        if: ${{ (inputs.build-tool) == 'gradle' }}
+        uses: gradle/actions/dependency-submission@v4
