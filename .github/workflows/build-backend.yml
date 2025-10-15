@@ -28,20 +28,17 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - name: Set up JDK${{ inputs.java-version }}
-        uses: actions/setup-java@v4
-        with:
-          java-version: ${{ inputs.java-version }}
-          distribution: 'temurin'
-          cache: ${{ inputs.build-tool }}
       - name: Build with Gradle
         if: ${{ (inputs.build-tool) == 'gradle' }}
         uses: navikt/oh-workflows/.github/actions/build-gradle@main
+        with:
+          java-version: ${{ inputs.java-version }}
       - name: Build with Maven
         if: ${{ (inputs.build-tool) == 'maven' }}
         uses: navikt/oh-workflows/.github/actions/build-maven@main
         id: build-maven
         with:
+          java-version: ${{ inputs.java-version }}
           snyk-token: ${{ secrets.SNYK_TOKEN }}
       - name: Build and push to GAR
         uses: nais/docker-build-push@v0

@@ -1,8 +1,12 @@
 name: Build maven
 description: Steps for building a maven project
 inputs:
+  java-version:
+    required: true
+    description: Version to build with
   snyk-token:
     required: true
+    description: Snyk token
 outputs:
   sbom:
     description: "SBOM file"
@@ -10,6 +14,12 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Set up JDK${{ inputs.java-version }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: 'temurin'
+        cache: 'maven'
     - name: Maven build
       env:
         SNYK_TOKEN: ${{ inputs.snyk-token }}
