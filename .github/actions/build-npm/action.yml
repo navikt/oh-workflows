@@ -3,6 +3,7 @@ description: Steps for building a npm project
 inputs:
   github-token:
     required: true
+    description: "gpr"
 runs:
   using: "composite"
   steps:
