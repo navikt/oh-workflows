@@ -34,6 +34,7 @@ jobs:
           cache: ${{ inputs.build-tool }}
           registry-url: "https://npm.pkg.github.com"
       - name: Npm build
+        shell: bash
         env:
           NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: |
