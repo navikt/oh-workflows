@@ -13,10 +13,6 @@ on:
         type: string
         description: Build tool to use
         default: 'npm'
-      node_auth_token:
-        description: gpr
-        required: true
-        type: string
     outputs:
       image:
         description: "Image"
@@ -40,7 +36,7 @@ jobs:
       - name: Npm build
         shell: bash
         env:
-          NODE_AUTH_TOKEN: ${{inputs.node_auth_token}}
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
         run: |
           npm ci
           npm run test
