@@ -14,5 +14,5 @@ runs:
         distribution: 'temurin'
     - uses: gradle/actions/setup-gradle@v5
     - name: Gradle build
-      run: ./gradlew build
+      run: ./gradlew clean build
       shell: bash
