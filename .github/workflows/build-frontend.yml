@@ -13,6 +13,10 @@ on:
         type: string
         description: Build tool to use
         default: 'npm'
+      node-auth-token:
+        required: true
+        type: string
+        description: Token for accessing gpr
     outputs:
       image:
         description: "Image"
